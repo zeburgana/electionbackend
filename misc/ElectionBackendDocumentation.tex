@@ -1,0 +1,129 @@
+\documentclass[12pt,a4paper]{article}
+% \usepackage[english]{babel}
+% \usepackage[utf8x]{inputenc}
+
+\usepackage{graphicx} % Required for inserting images.
+\usepackage[margin=25mm]{geometry}
+\parskip 4.2pt  % Sets spacing between paragraphs.
+% \renewcommand{\baselinestretch}{1.5}  % Uncomment for 1.5 spacing between lines.
+\parindent 8.4pt  % Sets leading space for paragraphs.
+\usepackage[font=sf]{caption} % Changes font of captions.
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{siunitx}
+\usepackage{verbatim}
+\usepackage{hyperref} % Required for inserting clickable links.
+\usepackage{natbib} % Required for APA-style citations.
+
+
+\title{President Eletction Application Documentation}
+\author{Martynas Galkinas}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+    200 words, and then we're done with the abstract.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+You have got to check out Fig.~\ref{fig:venn}: it is amazing.
+
+Here is an example citation when you want an author name like \cite{collins2011a} to appear in the text. And here's how to do a parenthetic citation, when you want to mention a reference at the end of a sentence or part of a sentence \citep{collins2013}.
+
+It is possible to cite multiple references at the same time \citep{collins2011b,collins2016,lunn2007a,lunn2007b,ross2006,shannon1948}.
+
+\section{Project}
+\subsection{Requirement Specification}
+Scope of the project: h and loc
+Conditions:
+\begin{itemize}
+    \item
+        There are multple candidates
+    \item
+        Voter can vote for only one of them
+    \item
+        No voter can change his/her decision once submitted
+    \item
+        There is no need to keep track of any voter data except and identifier,
+        region and their vote
+    \item
+        Assume that customer is identified by third party service, do not
+        implement registration or authentication.
+\end{itemize}
+
+
+Tasks:
+\begin{enumerate}
+    \item
+        Implement an endpoint that returns a list of candidates available:
+        \begin{itemize}
+            \item name
+            \item number on the list
+            \item short summary of their agenda
+        \end{itemize}
+    \item
+        Implement an endpoint that enables voting for the candidate
+    \item
+        Implement endpoints that return voting result reports
+        \begin{itemize}
+            \item Overall distribution of votes amongst candidates
+            \item Voting result distribution amongst different regions
+            \item Thee winner endpoint. It must return a single candidate
+                if he/she was voted for by more that 50\%. Otherwise
+                it must return tho most voted candidates.
+        \end{itemize}
+\end{enumerate}
+
+Requirements:
+\begin{itemize}
+    \item
+        You can use any of the followwing programming languages Java, Scala, Kotlin, Groovy
+    \item
+        You may use any frameworks you need.
+    \item
+        There are no specific requirements for data storage. You can keep it in
+        memory
+    \item
+        All interaction with an application must be implemented either as REST
+        or GraphQL endpoints
+    \item
+        Be mindful about naming and comments. Your core must be readable and
+        clean.
+    \item
+        Your final delivery must be either Maven or Gradle Project
+\end{itemize}
+
+\subsubsection{System functions}
+Usage diagram
+Action diagram
+
+\subsubsection{System project}
+dba diagram
+class diagram
+Internal diagram
+Installation diagram
+API documentation
+
+\section{Testing}
+\subsection{Integration tests}
+\subsection{Unit tests}
+
+\section{User Documentation}
+
+Did you see what I wrote in Sec.~\ref{sec:intro}? Not too controversial I hope!
+
+\begin{figure}[htbp!]
+    \begin{center}
+        \includegraphics[width=0.5\columnwidth]{venn_discoveries.pdf}
+    \end{center}
+    \caption{Yes, put a few words or sentences here explaining what is in the figure.}
+    \label{fig:venn}
+\end{figure}
+
+\bibliographystyle{apalike}
+\bibliography{example}
+
+\end{document}
