@@ -1,12 +1,11 @@
 package com.example.electionbackend.models;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Generated;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
+@Getter
+@Setter
 public class Voter {
   @Id
   @Setter(AccessLevel.NONE)
@@ -15,4 +14,8 @@ public class Voter {
   private String region;
   @OneToOne
   private Vote vote;
+
+  public boolean voted(){
+    return vote != null;
+  }
 }

@@ -12,4 +12,5 @@ import java.util.Optional;
 @Repository
 public interface VoterRepository extends JpaRepository<Voter,Integer> {
   Optional<List<Voter>> findAllByRegion(String region);
+  Optional<Voter> findById(long id);
 }

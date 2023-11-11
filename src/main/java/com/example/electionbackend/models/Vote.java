@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class Vote {
@@ -16,4 +15,9 @@ public class Vote {
   Voter voter;
   @OneToOne
   Candidate candidate;
+
+  public Vote(Voter voter, Candidate candidate){
+    this.voter = voter;
+    this.candidate = candidate;
+  }
 }

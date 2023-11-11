@@ -1,9 +1,12 @@
 package com.example.electionbackend.services;
 
+import com.example.electionbackend.models.Candidate;
 import com.example.electionbackend.repositories.CandidateRepository;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -21,14 +24,10 @@ public class CandidateService {
     return result.toString();
   }
 
-  public String getCandidate(int id) {
-    JSONObject result = new JSONObject();
+  public Optional<Candidate> getCandidate(int id) {
     if(candidateRepository.findById(id).isPresent()){
-      result.append("ha", "ha");
+      return candidateRepository.findById(id);
     }
-    else{
-      result.append("Error:", "haha");
-    }
-    return result.toString();
+    return Optional.empty();
   }
 }

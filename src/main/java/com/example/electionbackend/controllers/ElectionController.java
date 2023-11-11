@@ -20,13 +20,13 @@ public class ElectionController {
   public String getCandidates(){
     return candidateService.getAllCandidates();
   }
-  @GetMapping("getCandidate={id}")
-  public String getCandidates(@RequestParam int id){
-    return candidateService.getCandidate(id);
-  }
+//  @GetMapping("getCandidate={id}")
+//  public String getCandidates(@RequestParam int id){
+//    return candidateService.getCandidate(id).toString();
+//  }
   //Vote
   @PostMapping("voter={voterId}&candidate={candidateId}")
-  public String voteForCandidate(@RequestParam int voterId, @RequestParam int candidateId){
+  public String voteForCandidate(@PathVariable long voterId, @PathVariable int candidateId){
     return voterService.submitVote(voterId, candidateId);
   }
   //Statistics
