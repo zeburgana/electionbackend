@@ -25,12 +25,12 @@ public class ElectionController {
 //    return candidateService.getCandidate(id).toString();
 //  }
   //Vote
-  @PostMapping("voter={voterId}&candidate={candidateId}")
-  public String voteForCandidate(@PathVariable long voterId, @PathVariable int candidateId){
-    return voterService.submitVote(voterId, candidateId);
+  @PostMapping("")
+  public String voteForCandidate(@RequestParam long voter, @RequestParam int candidate){
+    return voterService.submitVote(voter, candidate);
   }
   //Statistics
-  @GetMapping("statistics/{type}")
+  @GetMapping("statistics")
   public String statistics(@RequestParam String type){
     return statisticsService.getStatistics(type);
   }

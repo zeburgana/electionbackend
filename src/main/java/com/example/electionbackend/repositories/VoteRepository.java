@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
   Optional<List<Vote>> findByCandidate(Candidate candidate);
+  int countByCandidate(Candidate candidate);
+  int countByVoterRegion(String region);
   Optional<List<Vote>> findByVoterRegion(String region);
-  @Query("SELECT DISTINCT COUNT (candidate), candidate.name FROM Vote")
-  List<Pair<Integer, String>> countDistinctByCandidate();
 }

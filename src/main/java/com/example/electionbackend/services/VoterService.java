@@ -20,7 +20,6 @@ public class VoterService {
     if(voterRepository.findById(voterId).isPresent() && candidateService.getCandidate(candidateId).isPresent())
     {
       Voter voter = voterRepository.findById(voterId).get();
-      System.out.println(voter.voted());
       if(voter.voted()){
         response.append("data", "Failed to submit vote");
       }

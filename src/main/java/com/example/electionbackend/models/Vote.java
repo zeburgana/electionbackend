@@ -13,7 +13,7 @@ public class Vote {
   int Id;
   @OneToOne
   Voter voter;
-  @OneToOne
+  @ManyToOne
   Candidate candidate;
 
   public Vote(Voter voter, Candidate candidate){
