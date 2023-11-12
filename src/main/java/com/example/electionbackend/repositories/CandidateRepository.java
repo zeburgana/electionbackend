@@ -11,5 +11,4 @@ import java.util.Optional;
 @Repository
 @Transactional
 public interface CandidateRepository extends JpaRepository<Candidate, Integer>{
-  Optional<Candidate> findByNumber(int number);
 }

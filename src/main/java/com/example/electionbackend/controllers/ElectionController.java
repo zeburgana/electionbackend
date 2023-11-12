@@ -1,11 +1,12 @@
 package com.example.electionbackend.controllers;
 
-import com.example.electionbackend.services.CandidateService;
-import com.example.electionbackend.services.StatisticsService;
-import com.example.electionbackend.services.VoterService;
+import com.example.electionbackend.models.Candidate;
+import com.example.electionbackend.services.*;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/election")
@@ -15,23 +16,19 @@ public class ElectionController {
   VoterService voterService;
   StatisticsService statisticsService;
 
-  //List
+  //List function
   @GetMapping("getCandidates")
-  public String getCandidates(){
+  public List<Candidate> getCandidates(){
     return candidateService.getAllCandidates();
   }
-//  @GetMapping("getCandidate={id}")
-//  public String getCandidates(@RequestParam int id){
-//    return candidateService.getCandidate(id).toString();
-//  }
-  //Vote
+  //Voting function
   @PostMapping("")
-  public String voteForCandidate(@RequestParam long voter, @RequestParam int candidate){
+  public JSONObject voteForCandidate(@RequestParam long voter, @RequestParam int candidate){
     return voterService.submitVote(voter, candidate);
   }
-  //Statistics
+  //Statistics function
   @GetMapping("statistics")
-  public String statistics(@RequestParam String type){
+  public JSONObject statistics(@RequestParam String type){
     return statisticsService.getStatistics(type);
   }
 }

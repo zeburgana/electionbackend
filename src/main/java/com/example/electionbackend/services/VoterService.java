@@ -15,27 +15,24 @@ public class VoterService {
   private VoteRepository voteRepository;
   private CandidateService candidateService;
 
-  public String submitVote(long voterId, int candidateId) {
+  public JSONObject submitVote(long voterId, int candidateId) {
     JSONObject response = new JSONObject();
-    if(voterRepository.findById(voterId).isPresent() && candidateService.getCandidate(candidateId).isPresent())
-    {
+    if(voterRepository.findById(voterId).isPresent() && candidateService.getCandidate(candidateId).isPresent()) {
       Voter voter = voterRepository.findById(voterId).get();
-      if(voter.voted()){
-        response.append("data", "Failed to submit vote");
+      if(voter.voted()) {
+        response.append("message", "Failed to submit vote");
+        return response;
       }
-      else{
-        voter.setVote(voteRepository.save(
-                        new Vote(voterRepository.findById(voterId).get(),
-                                candidateService.getCandidate(candidateId).get()
-                        )
-                ));
-        voterRepository.save(voter);
-        response.append("data", "Successfully submitted vote for candidate No. " + candidateId);
-      }
-    }else{
-      response.append("data", "Failed to submit vote");
-      return response.toString();
+
+      Vote temporaryVote = new Vote(voterRepository.findById(voterId).get(),
+              candidateService.getCandidate(candidateId).get());
+      voter.setVote(voteRepository.save(temporaryVote));
+      voterRepository.save(voter);
+      response.append("message", "Successfully submitted vote for candidate No. " + candidateId);
+
+      return response;
     }
-    return response.toString();
+    response.append("message", "Failed to submit vote");
+    return response;
   }
 }
