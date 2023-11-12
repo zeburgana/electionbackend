@@ -13,10 +13,10 @@ import java.util.*;
 public class StatisticsService {
   private VoteRepository voteRepository;
 
-  public JSONObject getStatistics(String type) {
-    JSONObject result = new JSONObject();
+  public Map<String, Integer> getStatistics(String type) {
     List<Vote> voteList;
     Map<String, Integer> candidateMap = new HashMap<>();
+    Map<String, Integer> resultMap = new HashMap<>();
 
     if(!type.isEmpty()){
       if(!voteRepository.findAll().isEmpty()) {
@@ -26,33 +26,39 @@ public class StatisticsService {
             for (Vote element : voteList) {
               candidateMap.put(element.getCandidate().getName(), voteRepository.countByCandidate(element.getCandidate()));
             }
-            result.put("",candidateMap);
+            return candidateMap;
           }
           case "regional" -> { //iterate over each element and add it up by region
             for (Vote element : voteList) {
-              candidateMap.put(element.getVoter().getRegion(), voteRepository.countByVoterRegion(element.getVoter().getRegion()));
+              //Create a map of Candidates name and a voter that voted for him in that region
+              candidateMap.put(element.getCandidate().getName() + ", " + element.getVoter().getRegion(),
+                      voteRepository.countByVoterRegionAndCandidate(element.getVoter().getRegion(), element.getCandidate()));
             }
-            result = new JSONObject(candidateMap);
+            return candidateMap;
           }
           case "winner" -> { //iterate over each element and add it up by Candidate
             for (Vote element : voteList) {
               candidateMap.put(element.getCandidate().getName(), voteRepository.countByCandidate(element.getCandidate()));
             }
+            Map.Entry<String, Integer> biggestEntry =
+                    (Collections.max(candidateMap.entrySet(), Map.Entry.comparingByValue()));
+
             //Pick out max value from the list
-            result = new JSONObject(Collections.max(candidateMap.entrySet(), Map.Entry.comparingByValue()));
+            resultMap.put(biggestEntry.getKey(), biggestEntry.getValue());
             //If the winner does not have more than 50% votes, add the closest candidate
             if ((float) Collections.max(candidateMap.entrySet(), Map.Entry.comparingByValue()).getValue() / voteList.size() < .5) {
               //Remove the biggest value from the map
-              candidateMap.remove(Collections.max(candidateMap.entrySet(), Map.Entry.comparingByValue()).getKey());
-              //Add the next biggest value to the result
-              result.put("",Collections.max(candidateMap.entrySet(), Map.Entry.comparingByValue()));
+              candidateMap.remove(biggestEntry.getKey(), biggestEntry.getValue());
+              //Get the next biggest value
+              biggestEntry = Collections.max(candidateMap.entrySet(), Map.Entry.comparingByValue());
+              //put the biggest value into the result map
+              resultMap.put(biggestEntry.getKey(), biggestEntry.getValue());
             }
+            candidateMap = resultMap;
           }
-          default -> result.put("", "Failed to fetch statistics");
         }
       }
-      result.put("", "Failed to fetch statistics");
     }
-    return result;
+    return candidateMap;
   }
 }

@@ -13,10 +13,19 @@ import java.util.Optional;
 public class CandidateService {
   private CandidateRepository candidateRepository;
 
+  /**
+   *
+   * @return Candidate List
+   */
   public List<Candidate> getAllCandidates() {
    return candidateRepository.findAll();
   }
 
+  /**
+   *
+   * @param id of the candidate
+   * @return Candidate by ID
+   */
   public Optional<Candidate> getCandidate(int id) {
     return candidateRepository.findById(id);
   }
