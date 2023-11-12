@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @AllArgsConstructor
 public class VoterService {
@@ -15,24 +18,25 @@ public class VoterService {
   private VoteRepository voteRepository;
   private CandidateService candidateService;
 
-  public JSONObject submitVote(long voterId, int candidateId) {
-    JSONObject response = new JSONObject();
+  public Map<String,String> submitVote(long voterId, int candidateId) {
+    Map<String, String> response = new HashMap<>();
+
     if(voterRepository.findById(voterId).isPresent() && candidateService.getCandidate(candidateId).isPresent()) {
       Voter voter = voterRepository.findById(voterId).get();
+
       if(voter.voted()) {
-        response.append("message", "Failed to submit vote");
-        return response;
+        response.put("message", "Failed to submit vote");
+      } else {
+        Vote temporaryVote = new Vote(voterRepository.findById(voterId).get(),
+                candidateService.getCandidate(candidateId).get());
+        voter.setVote(voteRepository.save(temporaryVote));
+        voterRepository.save(voter);
+
+        response.put("message", "Successfully submitted vote for candidate No. " + candidateId);
       }
-
-      Vote temporaryVote = new Vote(voterRepository.findById(voterId).get(),
-              candidateService.getCandidate(candidateId).get());
-      voter.setVote(voteRepository.save(temporaryVote));
-      voterRepository.save(voter);
-      response.append("message", "Successfully submitted vote for candidate No. " + candidateId);
-
-      return response;
+    } else {
+      response.put("message", "Failed to submit vote");
     }
-    response.append("message", "Failed to submit vote");
     return response;
   }
 }

@@ -32,10 +32,10 @@ public class ElectionController {
    * API Endpoint that processes voting for a chosen candidate
    * @param voter Voter identification number
    * @param candidate Candidate number
-   * @return Message of success or failure
+   * @return JSON response of success or failure
    */
   @PostMapping("")
-  public JSONObject voteForCandidate(@RequestParam long voter, @RequestParam int candidate){
+  public Map<String, String> voteForCandidate(@RequestParam long voter, @RequestParam int candidate){
     return voterService.submitVote(voter, candidate);
   }
 
