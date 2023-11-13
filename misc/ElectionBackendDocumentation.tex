@@ -1,6 +1,7 @@
 \documentclass[12pt,a4paper]{article}
-% \usepackage[english]{babel}
-% \usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[lithuanian]{babel}
 
 \usepackage{graphicx} % Required for inserting images.
 \usepackage[margin=25mm]{geometry}
@@ -25,7 +26,6 @@
 
 \section{Project}
 \subsection{Requirement Specification}
-Scope of the project: h and loc \\
 Conditions:
 \begin{itemize}
     \item
@@ -99,63 +99,65 @@ Requirements:
     \end{center}
     \caption{Database diagram}
 \end{figure}
-\subsubsection{Class diagram}
+%\subsubsection{Class diagram}
+\pagebreak
 \subsubsection{API documentation}
 This is a subsection consisting of the API endpoint documentation.
 \begin{center}
-\begin{tabular}{ |c|c| }
+\begin{tabular}{ |c|m{30em}| }
  \hline
  API endpoint & GET /api/election/getCandidates \\ \hline
- Expected response & JSON list of candidates \\ \hline
- Possible response & []\\
+ Expected response & [\newline \{"number": 1,"name": "Jonas","summary":"Uz geresne ateitį"\},\newline\{"number": 2,"name": "Petras","summary": "Už blogesnę praeitį"\},\newline\{"number": 3,"name": "Gryčius","summary": "Už Garstyčias grikiuose"\},\newline\{"number": 4,"name": "Margarita","summary": "Už mašinų draudimą keliuose"\},\newline\{"number": 5,"name": "Bertalomėja","summary": "Už <30kvm būtų naikinimą"\}\newline] \\ \hline
+ Possible response & [ ]\\
  \hline
 \end{tabular}
 \end{center}
 
 \begin{center}
-\begin{tabular}{ |c|c| }
+\begin{tabular}{ |c|m{30em}| }
  \hline
- %API endpoint & POST /api/election?voter=voter_id candidate=candidate_id  \\ \hline
- %Request Variables & voter_id - voter identification number  \\ \hline
- %candidate_id - candidates list number \\
- Expected response & {"message": "Successfully submitted vote for candidate No. 1"} \\ \hline
- Possible response & {"message": "Failed to submit vote"} \\ \hline
+API endpoint & POST /api/election?voter=\{voter\_id\}\&candidate=\{candidate\_id\}  \\ \hline
+ Request Variables & \{voter\_id\} - voter identification number
+ \{candidate\_id\} - candidates list number \\ \hline
+ Expected response & \{"message": "Successfully submitted vote for candidate No. 1"\} \\ \hline
+ Possible response & \{"message": "Failed to submit vote"\} \\ \hline
 \end{tabular}
 \end{center}
 
 \begin{center}
-\begin{tabular}{ |c|c| }
+\begin{tabular}{ |c|m{30em}| }
  \hline
  API endpoint & GET /api/election/statistics?type=total \\ \hline
- Expected response & {"Margarita": 1,"Bertalomėja": 2,"Jonas": 7,"Gryčius": 3} \\ \hline
- Possible response & [] \\ \hline
+ Expected response & \{"Margarita": 1,"Bertalomėja": 2,"Jonas": 7,"Gryčius": 3\} \\ \hline
+ Possible response & [ ] \\ \hline
 \end{tabular}
 \end{center}
 
 \begin{center}
-\begin{tabular}{ |c|c| }
+    \begin{tabular}{ |c|m{30em}| }
  \hline
  API endpoint & /api/election/statistics?type=regional \\ \hline
- Expected response & {"Bertalomėja, Vilnius":1,"Jonas, Kaunas":3,"Jonas, Šiauliai":1,"Margarita, Kaunas":1,"Jonas, Klaipėda":1,"Bertalomėja, Klaipėda":1,"Gryčius, Vilnius":2,"Gryčius, Kaunas":1,"Jonas, Vilnius":2} \\ \hline
- Possible response & [] \\ \hline
+ Expected response & \{\newline"Bertalomėja, Vilnius":1,\newline"Jonas, Kaunas":3,\newline"Jonas, Šiauliai":1,\newline"Margarita, Kaunas":1,\newline"Jonas, Klaipėda":1,\newline"Bertalomėja, Klaipėda":1,\newline"Gryčius, Vilnius":2,\newline"Gryčius, Kaunas":1,\newline"Jonas, Vilnius":2\newline\} \\ \hline
+ Possible response & [ ] \\ \hline
 \end{tabular}
 \end{center}
 
 \begin{center}
-\begin{tabular}{ |c|c| }
+\begin{tabular}{ |c|m{30em}| }
  \hline
  API endpoint & /api/election/statistics?type=winner \\ \hline
- Expected response & {"Jonas": 7} \\ \hline
- Possible response & {"Jonas": 5,"Gryčius": 4} \\ \hline
+ Expected response & \{"Jonas": 7\} \\ \hline
+ Possible response & \{"Jonas": 5,"Gryčius": 4\}, [ ] \\ \hline
 \end{tabular}
 \end{center}
 
 \section{Testing}
 \subsection{Unit tests}
-Unit tests were written in JUnit 5
+Unit tests were written in JUnit 5 for the basic classes: Vote, Candidate, Voter.
 
 \subsection{Integration tests}
-Integration tests were written in Jupiter, manual integration test were performed using Postman tool.
+Manual integration test were performed using Postman tool(the requests used for testing can be
+found in the misc folder of this repository).
 
 \section{Sources}
 \hyperlink{https://gitlab.matrasas.dev/zeburgana/electionbackend}{Gitlab repository - https://gitlab.matrasas.dev/zeburgana/electionbackend}
