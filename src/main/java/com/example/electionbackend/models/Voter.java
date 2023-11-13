@@ -6,6 +6,8 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Voter {
   @Id
   @Setter(AccessLevel.NONE)

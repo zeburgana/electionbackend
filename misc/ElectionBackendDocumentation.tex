@@ -15,7 +15,6 @@
 \usepackage{siunitx}
 \usepackage{verbatim}
 \usepackage{hyperref} % Required for inserting clickable links.
-\usepackage{natbib} % Required for APA-style citations.
 
 
 \title{President Eletction Application Documentation}
@@ -24,28 +23,18 @@
 \begin{document}
 \maketitle
 
-\begin{abstract}
-    200 words, and then we're done with the abstract.
-\end{abstract}
-
-\section{Introduction}\label{sec:intro}
-You have got to check out Fig.~\ref{fig:venn}: it is amazing.
-
-Here is an example citation when you want an author name like \cite{collins2011a} to appear in the text. And here's how to do a parenthetic citation, when you want to mention a reference at the end of a sentence or part of a sentence \citep{collins2013}.
-
-It is possible to cite multiple references at the same time \citep{collins2011b,collins2016,lunn2007a,lunn2007b,ross2006,shannon1948}.
-
 \section{Project}
 \subsection{Requirement Specification}
-Scope of the project: h and loc
+Scope of the project: h and loc \\
 Conditions:
 \begin{itemize}
     \item
-        There are multple candidates
+        There are multiple (unlimited number) candidates. You can have those
+        predefined.
     \item
-        Voter can vote for only one of them
+        Voter can vote for only one of them.
     \item
-        No voter can change his/her decision once submitted
+        No voter can change his/her decision once submitted.
     \item
         There is no need to keep track of any voter data except and identifier,
         region and their vote
@@ -59,18 +48,16 @@ Tasks:
 \begin{enumerate}
     \item
         Implement an endpoint that returns a list of candidates available:
-        \begin{itemize}
-            \item name
-            \item number on the list
-            \item short summary of their agenda
-        \end{itemize}
+             name,
+             number on the list,
+             short summary of their agenda.
     \item
-        Implement an endpoint that enables voting for the candidate
+        Implement an endpoint that enables voting for the candidate.
     \item
-        Implement endpoints that return voting result reports
+        Implement endpoints that return voting result reports.
         \begin{itemize}
-            \item Overall distribution of votes amongst candidates
-            \item Voting result distribution amongst different regions
+            \item Overall distribution of votes amongst candidates.
+            \item Voting result distribution amongst different regions.
             \item The winner endpoint. It must return a single candidate
                 if he/she was voted for by more that 50\%. Otherwise
                 it must return two most voted candidates.
@@ -80,50 +67,97 @@ Tasks:
 Requirements:
 \begin{itemize}
     \item
-        You can use any of the followwing programming languages Java, Scala, Kotlin, Groovy
+        You can use any of the following programming languages Java, Scala, Kotlin, Groovy
     \item
         You may use any frameworks you need.
     \item
         There are no specific requirements for data storage. You can keep it in
-        memory
+        memory.
     \item
         All interaction with an application must be implemented either as REST
-        or GraphQL endpoints
+        or GraphQL endpoints.
     \item
         Be mindful about naming and comments. Your core must be readable and
         clean.
     \item
-        Your final delivery must be either Maven or Gradle Project
+        Your final delivery must be either Maven or Gradle Project.
 \end{itemize}
 
-\subsubsection{System functions}
-Usage diagram
-Action diagram
-
-\subsubsection{System project}
-dba diagram
-class diagram
-Internal diagram
-Installation diagram
-API documentation
-
-\section{Testing}
-\subsection{Integration tests}
-\subsection{Unit tests}
-
-\section{User Documentation}
-
-Did you see what I wrote in Sec.~\ref{sec:intro}? Not too controversial I hope!
-
+\subsection{System project}
+\subsubsection{Usage diagram}
 \begin{figure}[htbp!]
     \begin{center}
-        \includegraphics[width=0.5\columnwidth]{venn_discoveries.pdf}
+        \includegraphics[width=0.5\columnwidth]{Usage diagram.png}
     \end{center}
-    \caption{Yes, put a few words or sentences here explaining what is in the figure.}
-    \label{fig:venn}
+    \caption{Use case diagram}
 \end{figure}
 
-\bibliographystyle{apalike}
-\bibliography{example}
+\subsubsection{Database diagram}
+\begin{figure}[htbp!]
+    \begin{center}
+        \includegraphics[width=0.5\columnwidth]{Database.png}
+    \end{center}
+    \caption{Database diagram}
+\end{figure}
+\subsubsection{Class diagram}
+\subsubsection{API documentation}
+This is a subsection consisting of the API endpoint documentation.
+\begin{center}
+\begin{tabular}{ |c|c| }
+ \hline
+ API endpoint & GET /api/election/getCandidates \\ \hline
+ Expected response & JSON list of candidates \\ \hline
+ Possible response & []\\
+ \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ |c|c| }
+ \hline
+ %API endpoint & POST /api/election?voter=voter_id candidate=candidate_id  \\ \hline
+ %Request Variables & voter_id - voter identification number  \\ \hline
+ %candidate_id - candidates list number \\
+ Expected response & {"message": "Successfully submitted vote for candidate No. 1"} \\ \hline
+ Possible response & {"message": "Failed to submit vote"} \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ |c|c| }
+ \hline
+ API endpoint & GET /api/election/statistics?type=total \\ \hline
+ Expected response & {"Margarita": 1,"Bertalomėja": 2,"Jonas": 7,"Gryčius": 3} \\ \hline
+ Possible response & [] \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ |c|c| }
+ \hline
+ API endpoint & /api/election/statistics?type=regional \\ \hline
+ Expected response & {"Bertalomėja, Vilnius":1,"Jonas, Kaunas":3,"Jonas, Šiauliai":1,"Margarita, Kaunas":1,"Jonas, Klaipėda":1,"Bertalomėja, Klaipėda":1,"Gryčius, Vilnius":2,"Gryčius, Kaunas":1,"Jonas, Vilnius":2} \\ \hline
+ Possible response & [] \\ \hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ |c|c| }
+ \hline
+ API endpoint & /api/election/statistics?type=winner \\ \hline
+ Expected response & {"Jonas": 7} \\ \hline
+ Possible response & {"Jonas": 5,"Gryčius": 4} \\ \hline
+\end{tabular}
+\end{center}
+
+\section{Testing}
+\subsection{Unit tests}
+Unit tests were written in JUnit 5
+
+\subsection{Integration tests}
+Integration tests were written in Jupiter, manual integration test were performed using Postman tool.
+
+\section{Sources}
+\hyperlink{https://gitlab.matrasas.dev/zeburgana/electionbackend}{Gitlab repository - https://gitlab.matrasas.dev/zeburgana/electionbackend}
 
 \end{document}
